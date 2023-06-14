@@ -1,0 +1,1 @@
+g++ -o main.exe ./source/main.cpp ./source/ajusteLinearMMQ.cpp && main.exe
