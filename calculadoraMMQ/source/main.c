@@ -7,12 +7,12 @@ typedef float (*callbacks[])(float x);
 
 float g1(float x)
 {
-    return (0.4* x);
+    return (0.2* x);
 }
 
 float g2(float x)
 {
-    return (0.02 * pow(x, 2));
+    return (0.03* x);
 }
 
 callbacks funcoesParametros =
@@ -38,6 +38,7 @@ void sistemaNormal(float fx[], float x[], callbacks g, int n)
     float g2_fx = 0;
 
 
+    //Sistema Normal
     // Calculando elementos do sistema normal
     printf("\n1. Calculado produtos escalares\n");
     for (int i = 0; i < n; i++)
@@ -61,6 +62,30 @@ void sistemaNormal(float fx[], float x[], callbacks g, int n)
     a1 = numA1 / denom;
     a2 = numA2 / denom; 
     printf("a1: %f, a2: %f", a1, a2);
+
+    //Medição de erro
+    printf("\n\n--------------- Medicao de erro ---------------------\n\n");
+
+    float SQres = 0;
+    float ymed = 0;
+    float SQtotal = 0;
+    float R2 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        SQres += pow(fx[i] - (a1*g[0](x[i]) + a2*g[1](x[i])), 2);
+        ymed += fx[i];
+    }
+    ymed *= (1/ (float) n);
+    for (int i = 0; i < n; i++)
+    {
+        SQtotal += pow(fx[i] - ymed, 2);
+    }
+    R2 = 1 - (SQres/SQtotal);
+
+    printf("SQres: %f\n", SQres);
+    printf("Ymed: %f\n", ymed);
+    printf("R2: %f", R2);
+
 };
 
 int main()
