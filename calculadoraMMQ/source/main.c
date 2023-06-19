@@ -58,7 +58,7 @@ void sistemaNormal(float *fx, float *x, callbacks g, int n)
 
 int main()
 {
-    char path[] = "../dadosEx2.txt";
+    char path[] = "../dados_tratados.txt";
 
     FILE *stream;
     stream = fopen(path, "r");
@@ -67,7 +67,7 @@ int main()
         printf("Arquivo nao pode ser aberto\n");
         return -1;
     }
-    
+
     int n = 101;
     int i[n];
     float t_i[n];
@@ -75,12 +75,20 @@ int main()
 
     int MAX_CARACTERES = 50;
     char linha[MAX_CARACTERES];
-    while (fgets(linha, MAX_CARACTERES, stream) && !feof(stream))
-    {
-        printf(linha);
+    int k = 0;
+    while (fgets(linha, MAX_CARACTERES, stream))
+    {   
+        sscanf(linha, "%d, %f, %f", &i[k], &t_i[k], &y_i[k]);
+        k++;
+        if(feof(stream)) break;
     }
     fclose(stream);
     printf("File read\n");
+
+    for(int k=0; k<n; k++)
+    {
+        printf("%d %f %f\n", i[k], t_i[k], y_i[k]);
+    }
 
     return 0;
 }
